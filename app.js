@@ -15,3 +15,8 @@ function handler(req, res) {
     res.end();
   })
 }
+io.sockets.on('connection', socket => {
+  socket.on('emit_from_client', data => {
+    console.log(data);
+  });
+});
