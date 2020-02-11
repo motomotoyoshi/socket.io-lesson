@@ -18,7 +18,6 @@ function handler(req, res) {
 
 io.sockets.on('connection', socket => {
   socket.on('emit_from_client', data => {
-    // console.log(data);
-    socket.emit('emit_from_server', 'Hello from server: ' + data);
+    socket.broadcast.emit('emit_from_server', 'Hello from server: ' + data);
   });
 });
