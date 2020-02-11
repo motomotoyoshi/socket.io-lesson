@@ -18,6 +18,8 @@ function handler(req, res) {
 
 io.sockets.on('connection', socket => {
   socket.on('emit_from_client', data => {
-      io.sockets.emit('emit_from_server', '[' +data.name + ']：' + data.msg);
+    socket.join(data.room);
+    socket.emit('emit_from_server', 'you are in ' + data.room);
+    socket.broadcast.to(data.room).emit('emit_from_server', data.msg);
   });
 });
