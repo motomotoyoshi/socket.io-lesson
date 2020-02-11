@@ -15,11 +15,14 @@ function handler(req, res) {
     res.end();
   })
 }
-
-io.sockets.on('connection', socket => {
+const chat = io.of('/chat').on('connection', socket => {
   socket.on('emit_from_client', data => {
     socket.join(data.room);
     socket.emit('emit_from_server', 'you are in ' + data.room);
     socket.broadcast.to(data.room).emit('emit_from_server', data.msg);
   });
+});
+
+const news = io.of('/news').on('connection', socket => {
+  socket.emit('emit_from_server', 'today: ' + new Date());
 });
