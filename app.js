@@ -18,6 +18,11 @@ function handler(req, res) {
 
 io.sockets.on('connection', socket => {
   socket.on('emit_from_client', data => {
-    socket.broadcast.emit('emit_from_server', 'Hello from server: ' + data);
+    // 接続しているソケット以外全部
+    // socket.broadcast.emit('emit_from_server', 'Hello from server: ' + data);
+
+    // 接続しているソケット全部
+    io.sockets.emit('emit_from_server', '[' + socket.id + ']' + data);
+
   });
 });
